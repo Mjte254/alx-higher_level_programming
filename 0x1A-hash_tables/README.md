@@ -1,1 +1,1 @@
-Python dictionaries are implemented using hash tables
+0x1A. C - Hash tables
