@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """
 list 10 commits (from the most recent to oldest) of the repository
 "rails" by the user "rails"
@@ -48,4 +47,3 @@ if __name__ == "__main__":
                 commits[i].get("commit").get("author").get("name")))
     except IndexError:
         pass
->>>>>>> 85c830d5152b4c87b4bb23ab8ef9119fffe1b20d
