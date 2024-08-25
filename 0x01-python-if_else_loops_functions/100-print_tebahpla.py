@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-for i in range(26):
+offset = 0
+for i in range(25, -1, -1):
     if i % 2 == 0:
-        print('{:c}'.format(122 - i), end='')
+        offset = ord('A') - ord('a')
     else:
-        print('{:c}'.format(90 - i), end='')
+        offset = 0
+    print('{}'.format(chr(i + ord('a') + offset)), end="")
