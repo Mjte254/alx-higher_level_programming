@@ -1,26 +1,53 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <Python.h>
+#include "Python.h"
+
 /**
- * print_python_list_info - Print some basic info about Python lists
- * @p: PyObject
- *
- * Return: Nothing
+ * printElement - print element info
+ * @p: python object
+ * @num: number of items in object
+ * Return: none
+ */
+void printElement(PyObject *p, int num)
+{
+	char *pyTypes[5] = { "str", "int", "float", "tuple", "list" };
+	int i;
+	PyObject *item = NULL;
+
+	if (num > 0)
+	{
+		for (i = 0; i < num; i++)
+		{
+			item = PyList_GetItem(p, i);
+			if (PyUnicode_Check(item))
+				printf("Element %d: %s\n", i, pyTypes[0]);
+			else if (PyLong_Check(item))
+				printf("Element %d: %s\n", i, pyTypes[1]);
+			else if (PyFloat_Check(item))
+				printf("Element %d: %s\n", i, pyTypes[2]);
+			else if (PyTuple_Check(item))
+				printf("Element %d: %s\n", i, pyTypes[3]);
+			else if (PyList_Check(item))
+				printf("Element %d: %s\n", i, pyTypes[4]);
+		}
+	}
+}
+
+/**
+ * print_python_list_info - Create a C function that prints some
+ * basic info about Python lists
+ * @p: python object
+ * Return: none
  */
 void print_python_list_info(PyObject *p)
 {
-PyObject *item;
-PyListObject *list = (PyListObject *)p;
-int i, size, alloc;
+	int number = 0, numAllocated = 0;
 
-size = Py_SIZE(p);
-alloc = list->allocated;
-printf("[*] Size of the Python List = %d\n", size);
-printf("[*] Allocated = %d\n", alloc);
+	if (!p)
+		return;
 
-for (i = 0; i < size; i++)
-{
-item =  PyList_GetItem(p, i);
-printf("Element %d: %s\n", i, Py_TYPE(item)->tp_name);
-}
+	number = (int)PyList_Size(p);
+	printf("[*] Size of the Python List = %d\n", number);
+
+	numAllocated = ((PyListObject *)p)->allocated;
+	printf("[*] Allocated = %d\n", numAllocated);
+	printElement(p, number);
 }
